@@ -1,0 +1,64 @@
+::WORK IN PROGRESS::
+
+General strategy for development (1 = first part of betting round, 2+ = subsequent parts of betting rounds (trying to bucket these but will need to seperate some logic))
+
+Preflop 1
+	In_Position
+	> raise top 90% / fold bottom 10%
+	Out_Of_Position
+	> raise top 30% / call top 70% / fold bottom 30%
+
+Preflop 2+
+	In_Position v Raise
+	> x
+	Out_Of_Position v Raise
+	> x
+
+
+Flop 1
+	Out_of_position
+	> x
+	In_Position v Raise
+	> x
+	In_Position v Check
+	> x
+
+Flop 2+
+	Out_of_position v Raise
+	> x
+	In_Position v Raise
+	> x
+
+
+Turn 1
+	Out_of_position
+	> x
+	In_Position v Raise
+	> x
+	In_Position v Check
+	> x
+
+Turn 2+
+	Out_of_position v Raise
+	> x
+	In_Position v Raise
+	> x
+
+River 1
+	Out_of_position
+	> x
+	In_Position v Raise
+	> x
+	In_Position v Check
+	> x
+
+River 2+
+	Out_of_position v Raise
+	> x
+	In_Position v Raise
+	> x
+
+
+TODO: Ensure follow up actions re-raises / 3bet etc / 3bet call etc are accounted for.
+TODO: Add bluff frequency from bottom of range.
+TODO: Adjust decisions for villan bet sizes (call more when bet is less / fold more when bet is more).
