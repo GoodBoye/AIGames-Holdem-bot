@@ -4,15 +4,15 @@ General strategy for development (1 = first part of betting round, 2+ = subseque
 
 Preflop 1
 	In_Position
-	> raise top 90% / fold bottom 10%
+	> raise top 90% > fold bottom 10%
 	Out_Of_Position
-	> raise top 30% / call top 70% / fold bottom 30%
+	> raise top 30% > call top 70% > fold bottom 30%
 
 Preflop 2+
 	In_Position v Raise
-	> x
+	> raise top 15% > call top 60% > fold bottom 40%
 	Out_Of_Position v Raise
-	> x
+	> raise top 10% > call top 50% > fold bottom 50%
 
 
 Flop 1
