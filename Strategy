@@ -1,5 +1,7 @@
 ::WORK IN PROGRESS::
 
+gite test
+
 General strategy for development (1 = first part of betting round, 2+ = subsequent parts of betting rounds (trying to bucket these but will need to seperate some logic))
 
 Preflop 1
