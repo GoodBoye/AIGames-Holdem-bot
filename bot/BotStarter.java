@@ -36,12 +36,13 @@ import table.card.Card;
  * the doMove() method to make your bot do more than random moves.
  *
  * @author Jim van Eeden - jim@riddles.io
+ * 
+ * Updated by GoodBoye 3-12-17
  */
 public class BotStarter {
 
     /**
      * Implement this method to make the bot smarter.
-     * Currently will check the strength of the hand and will Check, Call, or Raise.
      *
      * Not every move will be perfectly legal in all cases, but the engine will
      * transform the move to the logical alternative and output a warning if illegal.
@@ -53,22 +54,72 @@ public class BotStarter {
         ArrayList<Card> table = state.getTable().getTableCards();
 
         int strength = getHandStrength(hand, table);
+        
+        boolean imOnButton = (state.getOnButtonPlayer().getName().equals(state.getMyName()));
 
-        if (strength < HandEval.PAIR) {  // We only have a high card
-            if (state.getBetRound() == BetRound.RIVER) {  // Check if we're on the river with high card
-                return new Move(MoveType.CHECK);
-            }
-
-            return new Move(MoveType.CALL);
+/*
+ * Code below from starter bot, commented out to add other logic
+ */
+//        if (strength < HandEval.PAIR) {  // We only have a high card
+//            if (state.getBetRound() == BetRound.RIVER) {  // Check if we're on the river with high card
+//                return new Move(MoveType.CHECK);
+//            }
+//
+//            return new Move(MoveType.CALL);
+//        }
+//
+//        if (strength < HandEval.STRAIGHT) {  // We have pair, two pair, or three of a kind
+//            return new Move(MoveType.CALL);
+//        }
+//
+//        // We have a straight or higher
+//        return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);  // Raise by minimum
+        
+        switch (state.getBetRound()) {
+        	
+        	case BetRound.PREFLOP: return preflopLogic(); break;
+        	case BetRound.FLOP: return flopLogic(); break;
+        	case BetRound.TURN: return turnLogic(); break;
+        	case BetRound.RIVER: return riverLogic(); break;
+        	
+        
         }
-
-        if (strength < HandEval.STRAIGHT) {  // We have pair, two pair, or three of a kind
-            return new Move(MoveType.CALL);
-        }
-
-        // We have a straight or higher
-        return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);  // Raise by minimum
     }
+    
+    /*
+     * 
+     * if player on button raise top 90% > fold bottom 10%, otherwise raise top 30% > call top 70% > fold bottom 30%
+     *
+     */
+    private Move preflopLogic() {
+    	if (imOnButton) {
+    			//raise top 90% > fold bottom 10%
+    	} else {
+    			//raise top 30% > call top 70% > fold bottom 30%
+    	}
+    }
+    private Move flopLogic() {
+    	if (imOnButton) {
+			//
+    	} else {
+			//
+    	}
+    }
+    private Move turnLogic() {
+    	if (imOnButton) {
+			//
+    	} else {
+			//
+    	}
+    }
+    private Move riverLogic() {
+    	if (imOnButton) {
+			//
+    	} else {
+			//
+    	}
+    }
+    
 
     /**
      * Calculates the bot's hand strength with 0, 3, 4, or 5 cards on the table.
