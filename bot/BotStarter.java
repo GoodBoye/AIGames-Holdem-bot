@@ -40,7 +40,11 @@ import table.card.Card;
  * Updated by GoodBoye 3-12-17
  */
 public class BotStarter {
-
+	ArrayList<Card> hand;
+	ArrayList<Card> table;
+	int strength;
+	boolean imOnButton;
+	BotState state;
     /**
      * Implement this method to make the bot smarter.
      *
@@ -50,25 +54,24 @@ public class BotStarter {
      * @return The move the bot wants to make
      */
     public Move doMove(BotState state) {
-        ArrayList<Card> hand = state.getPlayers().get(state.getMyName()).getHand();
-        ArrayList<Card> table = state.getTable().getTableCards();
-
-        int strength = getHandStrength(hand, table);
+    	hand = state.getPlayers().get(state.getMyName()).getHand();
+        table = state.getTable().getTableCards();
+        this.state = state;
+        strength = getHandStrength(hand, table);
         
-        boolean imOnButton = (state.getOnButtonPlayer().getName().equals(state.getMyName()));
+        imOnButton = (state.getOnButtonPlayer().getName().equals(state.getMyName()));
 
 
         
-        switch (state.getBetRound()) {
-        	
-        	case BetRound.PREFLOP: return preflopLogic(); break;
-        	//case BetRound.FLOP: return flopLogic(); break;
-        	//case BetRound.TURN: return turnLogic(); break;
-        	//case BetRound.RIVER: return riverLogic(); break;
-        	default: return simpleStrat();
-        	
-        
+       	
+        if (state.getBetRound() == BetRound.PREFLOP) {
+        	return preflopLogic();
+        } else {
+        	return simpleStrat();
         }
+        	
+        
+        
     }
     
     /*
@@ -79,7 +82,7 @@ public class BotStarter {
     private Move preflopLogic() {
     	if (imOnButton) { //if im on the button
     			
- 			if (strength>getHandStrength(createHandFromStr("4H5H")) {
+ 			if (strength>getHandStrength(createHandFromStr("4H5H"), table)) {
  				return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);
  			} else {
  				//fold
@@ -89,9 +92,9 @@ public class BotStarter {
  
     	} else { //if im not on the button
  			
-    		if (strength>getHandStrength(createHandFromStr("AHJS")) {
+    		if (strength>getHandStrength(createHandFromStr("AHJS"), table)) {
     			return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);
- 			} else if (strength>getHandStrength(createHandFromStr("7H8H")) {
+ 			} else if (strength>getHandStrength(createHandFromStr("7H8H"), table)) {
  				//call
  				return new Move(MoveType.CALL);
  			} else {
@@ -101,27 +104,27 @@ public class BotStarter {
     				
     	}
     }
-    private Move flopLogic() {
-    	if (imOnButton) {
-			//
-    	} else {
-			//
-    	}
-    }
-    private Move turnLogic() {
-    	if (imOnButton) {
-			//
-    	} else {
-			//
-    	}
-    }
-    private Move riverLogic() {
-    	if (imOnButton) {
-			//
-    	} else {
-			//
-    	}
-    }
+//    private Move flopLogic() {
+//    	if (imOnButton) {
+//			//
+//    	} else {
+//			//
+//    	}
+//    }
+//    private Move turnLogic() {
+//    	if (imOnButton) {
+//			//
+//    	} else {
+//			//
+//    	}
+//    }
+//    private Move riverLogic() {
+//    	if (imOnButton) {
+//			//
+//    	} else {
+//			//
+//    	}
+//    }
     
 
     /**
@@ -172,9 +175,9 @@ public class BotStarter {
     
     //Constructor for hand takes height,suit as string such as AH (Ace of hearts)
     private ArrayList<Card> createHandFromStr (String handStr) {
-    	ArrayList<Card> minHand = new ArrayList<Card>;
-    	minHand.add(new Card(handStr.substring(0,1));
-    	minHand.add(new Card(handStr.substring(2,3));
+    	ArrayList<Card> minHand = new ArrayList<Card>();
+    	minHand.add(new Card(handStr.substring(0,1)));
+    	minHand.add(new Card(handStr.substring(2,3)));
     	return minHand;
     }
     
