@@ -18,7 +18,7 @@
  */
 
 package bot;
-
+import java.util.*;
 import com.stevebrecher.HandEval;
 
 import java.util.ArrayList;
@@ -57,30 +57,15 @@ public class BotStarter {
         
         boolean imOnButton = (state.getOnButtonPlayer().getName().equals(state.getMyName()));
 
-/*
- * Code below from starter bot, commented out to add other logic
- */
-//        if (strength < HandEval.PAIR) {  // We only have a high card
-//            if (state.getBetRound() == BetRound.RIVER) {  // Check if we're on the river with high card
-//                return new Move(MoveType.CHECK);
-//            }
-//
-//            return new Move(MoveType.CALL);
-//        }
-//
-//        if (strength < HandEval.STRAIGHT) {  // We have pair, two pair, or three of a kind
-//            return new Move(MoveType.CALL);
-//        }
-//
-//        // We have a straight or higher
-//        return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);  // Raise by minimum
+
         
         switch (state.getBetRound()) {
         	
         	case BetRound.PREFLOP: return preflopLogic(); break;
-        	case BetRound.FLOP: return flopLogic(); break;
-        	case BetRound.TURN: return turnLogic(); break;
-        	case BetRound.RIVER: return riverLogic(); break;
+        	//case BetRound.FLOP: return flopLogic(); break;
+        	//case BetRound.TURN: return turnLogic(); break;
+        	//case BetRound.RIVER: return riverLogic(); break;
+        	default: return simpleStrat();
         	
         
         }
@@ -92,10 +77,28 @@ public class BotStarter {
      *
      */
     private Move preflopLogic() {
-    	if (imOnButton) {
-    			//raise top 90% > fold bottom 10%
-    	} else {
-    			//raise top 30% > call top 70% > fold bottom 30%
+    	if (imOnButton) { //if im on the button
+    			
+ 			if (strength>getHandStrength(createHandFromStr("4H5H")) {
+ 				return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);
+ 			} else {
+ 				//fold
+ 				return new Move(MoveType.CHECK);
+ 			}
+    				
+ 
+    	} else { //if im not on the button
+ 			
+    		if (strength>getHandStrength(createHandFromStr("AHJS")) {
+    			return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);
+ 			} else if (strength>getHandStrength(createHandFromStr("7H8H")) {
+ 				//call
+ 				return new Move(MoveType.CALL);
+ 			} else {
+ 				//fold
+ 				return new Move(MoveType.CHECK);
+ 			}
+    				
     	}
     }
     private Move flopLogic() {
@@ -165,5 +168,35 @@ public class BotStarter {
     public static void main(String[] args) {
         BotParser parser = new BotParser(new BotStarter());
         parser.run();
+    }
+    
+    //Constructor for hand takes height,suit as string such as AH (Ace of hearts)
+    private ArrayList<Card> createHandFromStr (String handStr) {
+    	ArrayList<Card> minHand = new ArrayList<Card>;
+    	minHand.add(new Card(handStr.substring(0,1));
+    	minHand.add(new Card(handStr.substring(2,3));
+    	return minHand;
+    }
+    
+
+/*
+ * Code below from starter bot, commented out to add other logic
+ */
+    private Move simpleStrat() {
+    if (strength < HandEval.PAIR) {  // We only have a high card
+        if (state.getBetRound() == BetRound.RIVER) {  // Check if we're on the river with high card
+                    return new Move(MoveType.CHECK);
+                }
+  
+                return new Move(MoveType.CALL);
+            }
+  
+    if (strength < HandEval.STRAIGHT) {  // We have pair, two pair, or three of a kind
+                return new Move(MoveType.CALL);
+            }
+  
+    // We have a straight or higher
+    return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);  // Raise by minimum
+    
     }
 }

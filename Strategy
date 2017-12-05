@@ -1,20 +1,17 @@
 ::WORK IN PROGRESS::
 
-gite test
-
 General strategy for development (1 = first part of betting round, 2+ = subsequent parts of betting rounds (trying to bucket these but will need to seperate some logic))
 
 Preflop 1
 	In_Position
-	> raise top 90% > fold bottom 10%
-	Out_Of_Position
-	> raise top 30% > call top 70% > fold bottom 30%
+	> raise all hands
+
 
 Preflop 2+
 	In_Position v Raise
-	> raise top 15% > call top 60% > fold bottom 40%
+	> Raise AQ+ (AQ, AK, JJ-AA), call pair + hands with K or A & all hands with 2 flush cards > 43, fold all other cards.
 	Out_Of_Position v Raise
-	> raise top 10% > call top 50% > fold bottom 50%
+	> Raise AT+ 88+, call pairs 22+ & any hands with K or A & all hands with 2 flush cards > 43, fold all other cards.
 
 
 Flop 1
