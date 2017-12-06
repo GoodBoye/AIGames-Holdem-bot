@@ -40,7 +40,7 @@ import table.card.Card;
  * Updated by GoodBoye 3-12-17
  */
 public class BotStarter {
-	ArrayList<Card> hand;
+	ArrayList<javax.smartcardio.Card> hand;
 	ArrayList<Card> table;
 	int strength;
 	boolean imOnButton;
@@ -76,13 +76,14 @@ public class BotStarter {
     
     /*
      * 
-     * if player on button raise top 90% > fold bottom 10%, otherwise raise top 30% > call top 70% > fold bottom 30%
+     * Preflop strat first betting round 
+     * TODO: Explain in comment once finalised
      *
      */
     private Move preflopLogic() {
     	if (imOnButton) { //if im on the button
     			
- 			if (strength>getHandStrength(createHandFromStr("4H5H"), table)) {
+ 			if (strength >= HandEval.PAIR || rawStrength()>11) {
  				return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);
  			} else {
  				//fold
@@ -92,9 +93,9 @@ public class BotStarter {
  
     	} else { //if im not on the button
  			
-    		if (strength>getHandStrength(createHandFromStr("AHJS"), table)) {
+    		if ((strength >= HandEval.PAIR && rawStrength()>11) || rawStrength()>19) {
     			return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);
- 			} else if (strength>getHandStrength(createHandFromStr("7H8H"), table)) {
+ 			} else if (strength >= HandEval.PAIR || rawStrength()>13) {
  				//call
  				return new Move(MoveType.CALL);
  			} else {
@@ -205,7 +206,13 @@ public class BotStarter {
     
     }
     
-    private int rawStrength(Card card1, Card card2) {
+    /*
+     * takes the strength of each card and sums the values, then adds 3 if they are suited
+     * to get a single raw strength number.
+     */
+    private int rawStrength() {
+    	Card card1 = hand.get(0);
+    	Card card2 = hand.get(1);
     	int strength;
     	strength = card1.getHeight().getNumber() + card2.getHeight().getNumber();
     	if (card1.getSuit().getNumber() == card2.getSuit().getNumber()) {
