@@ -173,7 +173,8 @@ public class BotStarter {
         parser.run();
     }
     
-    //Constructor for hand takes height,suit as string such as AH (Ace of hearts)
+    //Constructs an ArrayList<Card> object from a string in the format of
+    // height,suit such as "AH" = Ace of hearts, 4C = 4 of clubs etc
     private ArrayList<Card> createHandFromStr (String handStr) {
     	ArrayList<Card> minHand = new ArrayList<Card>();
     	minHand.add(new Card(handStr.substring(0,1)));
@@ -183,7 +184,8 @@ public class BotStarter {
     
 
 /*
- * Code below from starter bot, commented out to add other logic
+ * Code below from starter bot, added other logic to take its place in some parts, but calling this
+ * for non completed parts during development
  */
     private Move simpleStrat() {
     if (strength < HandEval.PAIR) {  // We only have a high card
@@ -201,5 +203,12 @@ public class BotStarter {
     // We have a straight or higher
     return new Move(MoveType.RAISE, state.getTable().getBigBlind() * 2);  // Raise by minimum
     
+    }
+    
+    private int rawStrength(Card card1, Card card2) {
+    	int strength;
+    	strength = card1.getHeight().getNumber() + card2.getHeight().getNumber();
+    	return strength;
+    	
     }
 }
