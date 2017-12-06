@@ -210,7 +210,7 @@ public class BotStarter {
      * takes the strength of each card and sums the values, then adds 3 if they are suited
      * to get a single raw strength number.
      */
-    private int rawStrength() {
+    private int rawStrength(ArrayList<Card> hand) {
     	Card card1 = hand.get(0);
     	Card card2 = hand.get(1);
     	int strength;
