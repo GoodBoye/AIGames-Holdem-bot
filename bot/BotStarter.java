@@ -208,6 +208,9 @@ public class BotStarter {
     private int rawStrength(Card card1, Card card2) {
     	int strength;
     	strength = card1.getHeight().getNumber() + card2.getHeight().getNumber();
+    	if (card1.getSuit().getNumber() == card2.getSuit().getNumber()) {
+    		strength +=3;
+    	}
     	return strength;
     	
     }
