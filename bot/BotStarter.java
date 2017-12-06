@@ -40,7 +40,7 @@ import table.card.Card;
  * Updated by GoodBoye 3-12-17
  */
 public class BotStarter {
-	ArrayList<javax.smartcardio.Card> hand;
+	ArrayList<Card> hand;
 	ArrayList<Card> table;
 	int strength;
 	boolean imOnButton;
@@ -210,7 +210,7 @@ public class BotStarter {
      * takes the strength of each card and sums the values, then adds 3 if they are suited
      * to get a single raw strength number.
      */
-    private int rawStrength(ArrayList<Card> hand) {
+    private int rawStrength() {
     	Card card1 = hand.get(0);
     	Card card2 = hand.get(1);
     	int strength;
